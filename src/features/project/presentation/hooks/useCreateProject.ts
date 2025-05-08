@@ -32,6 +32,8 @@ export const useCreateProject = () => {
         authorId: user.id,
         authorName: user.name,
       };
+
+      console.log("Este es el payload a crear: " + payload.authorName);
       await createProjectUseCase.execute(payload);
       setSuccess(true);
     } catch (err) {

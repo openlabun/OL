@@ -6,6 +6,8 @@ export const ProjectMapper = {
     id: project.id,
     userId: project.authorId,
     title: project.title,
+    authorId: project.authorId,
+    authorName: project.authorName,
     url: project.url,
     description: project.description,
     createdAt: project.createdAt.toISOString(),

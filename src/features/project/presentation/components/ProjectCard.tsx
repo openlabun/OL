@@ -12,12 +12,12 @@ export const ProjectCard = ({
   onDelete,
 }: ProjectCardProps) => {
   return (
-    <div>
-      <div className="p-8 bg-white border rounded shadow-sm">
+    <div className="h-[280px] flex flex-col justify-between">
+      <div className="p-8 bg-white border rounded shadow-sm h-full flex flex-col">
         <p className="mb-3 text-xs font-semibold tracking-wide uppercase">
           <a
             href="/"
-            className="transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800"
+            className="transition-colors duration-200 text-teal-accent-400 hover:text-teal-accent-700"
             aria-label="Category"
           >
             Desarrollo
@@ -44,16 +44,25 @@ export const ProjectCard = ({
           </span>
         </p>
         <a
-          href="/"
+          href={project.url}
           aria-label="Article"
-          title="Jingle Bells"
-          className="inline-block mb-3 text-2xl font-bold leading-5 text-black transition-colors duration-200 hover:text-deep-purple-accent-400"
+          title={project.title}
+          className="inline-block mb-3 text-2xl font-bold leading-5 text-black transition-colors duration-200 hover:text-teal-accent-400  text-ellipsis"
         >
           {project.title}
         </a>
-        <p className="mb-5 text-gray-700">{project.description}</p>
-        <div className="flex items-center">
-          <a href="/" aria-label="Author" title="Author" className="mr-3">
+
+        <p className="mb-5 text-gray-700 line-clamp-3 overflow-hidden">
+          {project.description}
+        </p>
+
+        <div className="flex items-center mt-auto">
+          <a
+            href={project.url}
+            aria-label="Author"
+            title="Author"
+            className="mr-3"
+          >
             <img
               src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"
               alt="avatar"
@@ -62,10 +71,10 @@ export const ProjectCard = ({
           </a>
           <div>
             <a
-              href="/"
+              href={project.url}
               aria-label="Author"
               title="Author"
-              className="font-semibold text-gray-800 transition-colors duration-200 hover:text-deep-purple-accent-400"
+              className="font-semibold text-gray-800 transition-colors duration-200 hover:text-teal-accent-400"
             >
               {project.authorName || "John Doe"}
             </a>
@@ -73,34 +82,6 @@ export const ProjectCard = ({
           </div>
         </div>
       </div>
-      {/* <div className="flex flex-col justify-between p-5 border rounded shadow-sm">
-        <div>
-          <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-teal-50">
-            <svg
-              className="w-12 h-12 text-teal-accent-400"
-              stroke="currentColor"
-              viewBox="0 0 52 52"
-            >
-              <polygon
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-                points="29 13 14 29 25 29 23 39 38 23 27 23"
-              />
-            </svg>
-          </div>
-          <h6 className="mb-2 font-semibold leading-5">{project.title}</h6>
-          <p className="mb-3 text-sm text-gray-900">{project.description}</p>
-        </div>
-        <a
-          href={project.url}
-          aria-label=""
-          className="inline-flex items-center font-semibold transition-colors duration-200 text-teal-accent-400 hover:text-teal-accent-400"
-        >
-          Ir al sitio
-        </a>
-      </div> */}
 
       {(onEdit || onDelete) && (
         <div className="flex gap-2 mt-4">
