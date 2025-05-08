@@ -1,17 +1,23 @@
 import type { Project } from "@/features/project/domain/entities/Project";
 import { ProjectCard } from "./ProjectCard";
+import { ProjectCardSkeleton } from "./ProjectCardSkeleton";
 
 interface ProjectListProps {
   projects: Project[];
-  onEdit?: (project: Project) => void;
-  onDelete?: (projectId: string) => void;
+  loading: boolean;
 }
 
-export const ProjectList = ({
-  projects,
-  onEdit,
-  onDelete,
-}: ProjectListProps) => {
+export const ProjectList = ({ projects, loading }: ProjectListProps) => {
+  if (loading) {
+    return (
+      <div className="grid gap-4 row-gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <ProjectCardSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
   if (projects.length === 0) {
     return (
       <p className="text-center text-gray-600 dark:text-gray-300">
@@ -21,14 +27,9 @@ export const ProjectList = ({
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid gap-4 row-gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {projects.map((project) => (
-        <ProjectCard
-          key={project.id}
-          project={project}
-          onEdit={onEdit}
-          onDelete={onDelete}
-        />
+        <ProjectCard key={project.id} project={project} />
       ))}
     </div>
   );

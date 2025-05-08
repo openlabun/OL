@@ -104,7 +104,7 @@ export const RegisterForm = () => {
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
         >
           {loading ? "Cargando..." : "Crear cuenta"}
         </button>
@@ -113,7 +113,7 @@ export const RegisterForm = () => {
 
       <p className="mt-4 text-xs text-gray-600 sm:text-sm">
         ¿Ya tienes una cuenta?{" "}
-        <a href="/login" className="text-blue-500 hover:underline">
+        <a href="/login" className="text-teal-accent-700 hover:underline">
           Inicia sesión
         </a>
         .

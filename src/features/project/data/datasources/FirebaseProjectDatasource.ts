@@ -27,6 +27,11 @@ export class FirebaseProjectDatasource {
     return snapshot.docs.map((doc) => doc.data() as ProjectDTO);
   }
 
+  async getAllProjects(): Promise<ProjectDTO[]> {
+    const snapshot = await getDocs(collection(firestore, "projects"));
+    return snapshot.docs.map((doc) => doc.data() as ProjectDTO);
+  }
+
   async update(project: ProjectDTO): Promise<void> {
     const docRef = doc(firestore, "projects", project.id);
     await updateDoc(docRef, {

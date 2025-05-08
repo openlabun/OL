@@ -1,26 +1,32 @@
-import { RegisterForm } from "./RegisterForm";
+import type { ReactNode } from "react";
 
-export const Header = () => {
+interface HeaderProps {
+  title: string;
+  children: ReactNode;
+}
+
+export const Header = ({ title, children }: HeaderProps) => {
   return (
-    <div className="min-h-screen min-w-screen overflow-hidden bg-gray-900">
+    <div className="overflow-hidden bg-gray-900">
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
         <div className="flex flex-col items-center justify-between xl:flex-row">
           <div className="w-full max-w-xl mb-12 xl:pr-16 xl:mb-0 xl:w-7/12">
             <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight text-white sm:text-4xl sm:leading-none">
-              The quick, brown fox <br className="hidden md:block" />
-              jumps over a{" "}
-              <span className="text-teal-accent-400">lazy dog</span>
+              Tu imaginación, <br className="hidden md:block" />
+              nuestra <span className="text-teal-accent-400">vitrina</span>
             </h2>
             <p className="max-w-xl mb-4 text-base text-gray-400 md:text-lg">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudan, totam rem aperiam, eaque ipsa quae.
+              Descubre lo que están creando las mentes jóvenes de Uninorte. Open
+              Lab es el escenario donde los estudiantes comparten sus ideas,
+              experimentan con nuevas tecnologías y demuestran que la innovación
+              nace en el aula, pero no se queda ahí.
             </p>
             <a
               href="/"
               aria-label=""
               className="inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-accent-400 hover:text-teal-accent-700"
             >
-              Learn more
+              ¡Inspírate con su talento!
               <svg
                 className="inline-block w-3 ml-2"
                 fill="currentColor"
@@ -56,9 +62,9 @@ export const Header = () => {
               </svg>
               <div className="relative bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                  Sign up for updates
+                  {title}
                 </h3>
-                <RegisterForm />
+                {children}
               </div>
             </div>
           </div>

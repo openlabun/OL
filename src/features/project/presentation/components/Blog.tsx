@@ -19,16 +19,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
       </div>
       <div>
-        {/* <div className="mb-2">
-          <a
-            href={project.tagHref}
-            className="text-xs font-semibold tracking-wide uppercase transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800"
-            aria-label="Category"
-            title={project.tag}
-          >
-            {project.tag}
-          </a> */}
-
         <div className="mb-2">
           <a
             href={project.title}

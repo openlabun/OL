@@ -82,7 +82,7 @@ export const LoginForm = () => {
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
         >
           {loading ? "Cargando..." : "Iniciar sesión"}
         </button>
@@ -94,7 +94,7 @@ export const LoginForm = () => {
         "
       >
         ¿No tienes una cuenta?{" "}
-        <a href="/register" className="text-blue-500 hover:underline">
+        <a href="/register" className="text-teal-accent-700 hover:underline">
           Regístrate
         </a>
       </p>

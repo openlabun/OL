@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LoginPage } from "@/features/auth/presentation/pages/LoginPage";
 import { RegisterPage } from "@/features/auth/presentation/pages/RegisterPage";
 import { PrivateRoute } from "./PrivateRoute";
-import { ProfilePage } from "@/features/auth/presentation/pages/ProfilePage";
-import { MyProjectsPage } from "@/features/project/presentation/pages/MyProjectsPage";
 import { MainLayout } from "@/shared/layouts/MainLayout";
+import { AllProjectsPage } from "@/features/project/presentation/pages/AllProjectsPage";
+import { MyProjectsPage } from "@/features/project/presentation/pages/MyProjectsPage";
 
 export const AppRouter = () => {
   return (
@@ -15,18 +15,11 @@ export const AppRouter = () => {
           {/* Públicas */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/proyectos" element={<AllProjectsPage />} />
 
           {/* Privadas */}
           <Route
             path="/perfil"
-            element={
-              <PrivateRoute>
-                <ProfilePage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/mis-proyectos"
             element={
               <PrivateRoute>
                 <MyProjectsPage />
@@ -35,7 +28,7 @@ export const AppRouter = () => {
           />
 
           {/* Redirección por defecto */}
-          <Route path="*" element={<LoginPage />} />
+          <Route path="*" element={<AllProjectsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

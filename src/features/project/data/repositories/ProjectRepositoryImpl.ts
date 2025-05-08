@@ -11,6 +11,10 @@ export class ProjectRepositoryImpl implements ProjectRepository {
     this.datasource = datasource;
     this.userId = userId;
   }
+  async getAllProjects(): Promise<Project[]> {
+    const dtos = await this.datasource.getAllProjects();
+    return dtos.map(ProjectMapper.toDomain);
+  }
 
   async create(project: Omit<Project, "id" | "createdAt">): Promise<void> {
     const newProject: Project = {

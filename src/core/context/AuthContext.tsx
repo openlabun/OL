@@ -28,23 +28,31 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Función para verificar el estado de autenticación en localStorage
-  const checkToken = async () => {
-    const storedToken = localStorage.getItem("auth");
-    if (storedToken) {
-      try {
-        const userData = await getCurrentUser.execute(); // Obtenemos el usuario actual desde el contenedor
-        setUser(userData); // Establecemos el usuario
-      } catch (err) {
-        localStorage.removeItem("auth");
+  // Función centralizada para cargar el usuario
+  const loadCurrentUser = async () => {
+    try {
+      setLoading(true);
+      const storedToken = localStorage.getItem("auth");
+
+      if (storedToken) {
+        const userData = await getCurrentUser.execute();
+        console.log("Usuario obtenido:", userData);
+        setUser(userData);
+      } else {
+        setUser(null);
       }
+    } catch (err) {
+      console.error("Error al cargar usuario:", err);
+      localStorage.removeItem("auth");
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  // Llamar la función para verificar el token al iniciar
+  // Efecto para cargar el usuario al montar el componente
   useEffect(() => {
-    checkToken();
+    loadCurrentUser();
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -52,15 +60,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       setLoading(true);
       setError(null);
       const user = await loginUser.execute(email, password);
-
       localStorage.setItem("auth", user.token);
       setUser(user);
     } catch (err) {
-      if (err instanceof AppError) {
-        setError(err.message);
-      } else {
-        setError("Ocurrió un error inesperado");
-      }
+      handleAuthError(err);
     } finally {
       setLoading(false);
     }
@@ -73,11 +76,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const user = await registerUser.execute(email, password, name);
       setUser(user);
     } catch (err) {
-      if (err instanceof AppError) {
-        setError(err.message);
-      } else {
-        setError("Ocurrió un error inesperado");
-      }
+      handleAuthError(err);
     } finally {
       setLoading(false);
     }
@@ -91,21 +90,21 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       localStorage.removeItem("auth");
       setUser(null);
     } catch (err) {
-      if (err instanceof AppError) {
-        setError(err.message);
-      } else {
-        setError("Ocurrió un error inesperado");
-      }
+      handleAuthError(err);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    const currentUser = getCurrentUser.execute();
-    setUser(currentUser);
-    setLoading(false);
-  }, []);
+  // Función helper para manejar errores
+  const handleAuthError = (err: unknown) => {
+    if (err instanceof AppError) {
+      setError(err.message);
+    } else {
+      setError("Ocurrió un error inesperado");
+      console.error(err);
+    }
+  };
 
   return (
     <AuthContext.Provider

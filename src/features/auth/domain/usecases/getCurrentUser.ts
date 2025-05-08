@@ -7,7 +7,7 @@ export class GetCurrentUser {
     this.authRepo = authRepo;
   }
 
-  execute(): User | null {
-    return this.authRepo.getCurrentUser();
+  async execute(): Promise<User | null> {
+    return await this.authRepo.getCurrentUser();
   }
 }

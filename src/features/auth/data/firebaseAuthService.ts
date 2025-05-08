@@ -39,10 +39,6 @@ export class FirebaseAuthService implements AuthRepository {
         email,
         password
       );
-
-      console.log("Auth:", auth);
-
-      console.log("User logged in:", userCredential);
       return firebaseToDomainUser(userCredential.user);
     } catch (error) {
       throw mapFirebaseErrorToAppError(error);
@@ -60,8 +56,7 @@ export class FirebaseAuthService implements AuthRepository {
   async getCurrentUser(): Promise<User | null> {
     return new Promise<User | null>((resolve, reject) => {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        unsubscribe(); // Detener la suscripción después de obtener el usuario
-
+        unsubscribe();
         if (user) {
           try {
             const domainUser = await firebaseToDomainUser(user);

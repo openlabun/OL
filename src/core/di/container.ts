@@ -12,6 +12,7 @@ import { DeleteProject } from "@/features/project/domain/usecases/DeleteProject"
 
 import { ProjectRepositoryImpl } from "@/features/project/data/repositories/ProjectRepositoryImpl";
 import { FirebaseProjectDatasource } from "@/features/project/data/datasources/FirebaseProjectDatasource";
+import { GetAllProjects } from "@/features/project/domain/usecases/GetAllProjects";
 
 // Crear una instancia de todos los casos de uso
 export const container = {
@@ -27,10 +28,15 @@ export const container = {
   },
 
   getGetMyProjectsUseCase: (userId: string) => {
-    console.log("userId", userId);
     const datasource = new FirebaseProjectDatasource();
     const repository = new ProjectRepositoryImpl(datasource, userId);
     return new GetMyProjects(repository);
+  },
+
+  getAllProjectsUseCase: () => {
+    const datasource = new FirebaseProjectDatasource();
+    const repository = new ProjectRepositoryImpl(datasource, "");
+    return new GetAllProjects(repository);
   },
 
   getUpdateProjectUseCase: (userId: string) => {
