@@ -10,6 +10,7 @@ export const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,35 +38,66 @@ export const LoginForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-sm mx-auto space-y-4 p-4 border rounded shadow bg-white dark:bg-gray-800"
-    >
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+    <form onSubmit={handleSubmit}>
+      <div className="mb-1 sm:mb-2">
+        <label htmlFor="email" className="inline-block mb-1 font-medium">
+          Correo
+        </label>
+        <input
+          type="text"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+          id="email"
+          name="email"
+          required
+        />
+      </div>
+      <div className="mb-1 sm:mb-2">
+        <label htmlFor="password" className="inline-block mb-1 font-medium">
+          Contraseña
+        </label>
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+            id="password"
+            name="password"
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-600"
+          >
+            {showPassword ? "Ocultar" : "Mostrar"}
+          </button>
+        </div>
+      </div>
+      <div className="mt-4 mb-2 sm:mb-4">
+        <button
+          type="submit"
+          disabled={loading}
+          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+        >
+          {loading ? "Cargando..." : "Iniciar sesión"}
+        </button>
+      </div>
+      {error && <p className="text-xs text-red-600 sm:text-sm">{error}</p>}
 
-      <input
-        type="email"
-        placeholder="Correo electrónico"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
-      />
-
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
-      />
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+      <p
+        className="mt-4 text-xs text-gray-600 sm:text-sm
+        "
       >
-        {loading ? "Cargando..." : "Entrar"}
-      </button>
+        ¿No tienes una cuenta?{" "}
+        <a href="/register" className="text-blue-500 hover:underline">
+          Regístrate
+        </a>
+      </p>
     </form>
   );
 };

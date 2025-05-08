@@ -28,11 +28,32 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Función para verificar el estado de autenticación en localStorage
+  const checkToken = async () => {
+    const storedToken = localStorage.getItem("auth");
+    if (storedToken) {
+      try {
+        const userData = await getCurrentUser.execute(); // Obtenemos el usuario actual desde el contenedor
+        setUser(userData); // Establecemos el usuario
+      } catch (err) {
+        localStorage.removeItem("auth");
+      }
+    }
+    setLoading(false);
+  };
+
+  // Llamar la función para verificar el token al iniciar
+  useEffect(() => {
+    checkToken();
+  }, []);
+
   const login = async (email: string, password: string) => {
     try {
       setLoading(true);
       setError(null);
       const user = await loginUser.execute(email, password);
+
+      localStorage.setItem("auth", user.token);
       setUser(user);
     } catch (err) {
       if (err instanceof AppError) {
@@ -67,6 +88,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       setLoading(true);
       setError(null);
       await logoutUser.execute();
+      localStorage.removeItem("auth");
       setUser(null);
     } catch (err) {
       if (err instanceof AppError) {
@@ -83,7 +105,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     const currentUser = getCurrentUser.execute();
     setUser(currentUser);
     setLoading(false);
-  }, [getCurrentUser]);
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -94,6 +116,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

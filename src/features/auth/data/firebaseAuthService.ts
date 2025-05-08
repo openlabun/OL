@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { getAuth } from "firebase/auth";
 import type { User } from "../domain/entities/User";
@@ -38,6 +39,10 @@ export class FirebaseAuthService implements AuthRepository {
         email,
         password
       );
+
+      console.log("Auth:", auth);
+
+      console.log("User logged in:", userCredential);
       return firebaseToDomainUser(userCredential.user);
     } catch (error) {
       throw mapFirebaseErrorToAppError(error);
@@ -52,12 +57,22 @@ export class FirebaseAuthService implements AuthRepository {
     }
   }
 
-  getCurrentUser(): User | null {
-    try {
-      const current = auth.currentUser;
-      return current ? firebaseToDomainUser(current) : null;
-    } catch (error) {
-      throw mapFirebaseErrorToAppError(error);
-    }
+  async getCurrentUser(): Promise<User | null> {
+    return new Promise<User | null>((resolve, reject) => {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        unsubscribe(); // Detener la suscripción después de obtener el usuario
+
+        if (user) {
+          try {
+            const domainUser = await firebaseToDomainUser(user);
+            resolve(domainUser); // Devolvemos el usuario mapeado
+          } catch (error) {
+            reject(mapFirebaseErrorToAppError(error));
+          }
+        } else {
+          resolve(null); // El usuario no está autenticado
+        }
+      });
+    });
   }
 }

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useGetMyProjects } from "@/features/project/presentation/hooks/useGetMyProjects";
 import { useCreateProject } from "@/features/project/presentation/hooks/useCreateProject";
-import { ProjectCard } from "../components/ProjectCard";
-import { ProjectForm } from "../components/ProjectForm";
+import { ProjectCard } from "../components/Blog";
+
 import type { Project } from "../../domain/entities/Project";
 
 export const MyProjectsPage = () => {
@@ -32,39 +32,12 @@ export const MyProjectsPage = () => {
   };
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Mis Proyectos</h1>
-        <button
-          onClick={() => {
-            setEditingProject(null);
-            setShowForm(!showForm);
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          {showForm ? "Cancelar" : "Nuevo proyecto"}
-        </button>
+    <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+      <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
+        {projects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
       </div>
-
-      {showForm && (
-        <ProjectForm
-          onSubmit={handleCreate}
-          loading={creating}
-          initialProject={editingProject || undefined}
-        />
-      )}
-
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-
-      {loadingProjects ? (
-        <p>Cargando proyectos...</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      )}
     </div>
   );
 };

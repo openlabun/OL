@@ -1,6 +1,6 @@
-import { RegisterForm } from "../components/RegisterForm";
+import { RegisterForm } from "./RegisterForm";
 
-export const RegisterPage = () => {
+export const Header = () => {
   return (
     <div className="min-h-screen min-w-screen overflow-hidden bg-gray-900">
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -56,7 +56,7 @@ export const RegisterPage = () => {
               </svg>
               <div className="relative bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                  Crea tu cuenta
+                  Sign up for updates
                 </h3>
                 <RegisterForm />
               </div>
