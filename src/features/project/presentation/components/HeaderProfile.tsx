@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useCreateProject } from "../hooks/useCreateProject";
-import { useGetMyProjects } from "../hooks/useGetMyProjects";
+
+import { useAuth } from "@/core/context/AuthContext";
+import SVGComponent from "@/shared/components/SVGComponent";
 import type { Project } from "../../domain/entities/Project";
 import { CreateForm } from "./CreateForm";
-import SVGComponent from "@/shared/components/SVGComponent";
-import { useAuth } from "@/core/context/AuthContext";
 
 export const HeaderProfile = () => {
   const { user } = useAuth();
-  const { refetch } = useGetMyProjects();
-  const { createProject, loading: creating, success } = useCreateProject();
+
+  const { createProject, loading: creating } = useCreateProject();
 
   const [showForm, setShowForm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
@@ -20,10 +20,9 @@ export const HeaderProfile = () => {
     url: string;
   }) => {
     await createProject(data.title, data.description, data.url);
-    if (success) {
-      setShowForm(false);
-      refetch();
-    }
+
+    setShowForm(false);
+    window.location.reload();
   };
 
   return (

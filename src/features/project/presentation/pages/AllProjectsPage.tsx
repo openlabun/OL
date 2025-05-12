@@ -2,7 +2,7 @@ import { ProjectList } from "../components/ProjectList";
 import { useGetAllProjects } from "../hooks/useGetAllMyProjects";
 
 export const AllProjectsPage = () => {
-  const { projects, loading: loadingProjects } = useGetAllProjects();
+  const { projects, loading: loadingProjects, refetch } = useGetAllProjects();
 
   return (
     <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -41,7 +41,11 @@ export const AllProjectsPage = () => {
           muestra del talento de nuestros estudiantes.
         </p>
       </div>
-      <ProjectList projects={projects} loading={loadingProjects} />
+      <ProjectList
+        projects={projects}
+        loading={loadingProjects}
+        onRefresh={refetch}
+      />
     </div>
   );
 };

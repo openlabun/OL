@@ -4,12 +4,19 @@ import { ProjectCardSkeleton } from "./ProjectCardSkeleton";
 import { useAuth } from "@/core/context/AuthContext";
 import { useUpdateProject } from "../hooks/useUpdateProject";
 import { useDeleteProject } from "../hooks/useDeleteProject";
-import { useGetMyProjects } from "../hooks/useGetMyProjects";
 
-export const ProjectList = () => {
+interface ProjectListProps {
+  projects: Project[];
+  loading: boolean;
+  onRefresh?: () => Promise<void>;
+}
+
+export const ProjectList = ({
+  projects,
+  loading,
+  onRefresh,
+}: ProjectListProps) => {
   const { user } = useAuth();
-
-  const { projects = [], loading, refetch } = useGetMyProjects();
 
   const { updateProject } = useUpdateProject();
 
@@ -17,11 +24,12 @@ export const ProjectList = () => {
 
   const handleEdit = async (data: Project) => {
     await updateProject(data);
-    refetch();
+    onRefresh?.();
   };
 
   const handleDelete = async (id: string) => {
     await deleteProject(id);
+    onRefresh?.();
   };
 
   if (loading) {

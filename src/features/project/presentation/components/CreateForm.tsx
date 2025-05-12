@@ -88,7 +88,7 @@ export const CreateForm = ({
             disabled={loading}
             className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-teal-accent-400 hover:bg-teal-accent-700 focus:shadow-outline focus:outline-none"
           >
-            {loading ? "Cargando..." : "Crear proyecto"}
+            {loading ? "Cargando..." : "Enviar"}
           </button>
         </div>
       </form>
