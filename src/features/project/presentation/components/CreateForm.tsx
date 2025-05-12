@@ -34,7 +34,7 @@ export const CreateForm = ({
   return (
     <div className="relative bg-white rounded shadow-2xl p-7 sm:p-10">
       <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-        Crea tu proyecto
+        Tu proyecto
       </h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-1 sm:mb-2">

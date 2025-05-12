@@ -9,12 +9,7 @@ import { useAuth } from "@/core/context/AuthContext";
 export const HeaderProfile = () => {
   const { user } = useAuth();
   const { refetch } = useGetMyProjects();
-  const {
-    createProject,
-    loading: creating,
-    error,
-    success,
-  } = useCreateProject();
+  const { createProject, loading: creating, success } = useCreateProject();
 
   const [showForm, setShowForm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);

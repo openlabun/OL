@@ -1,13 +1,29 @@
 import type { Project } from "@/features/project/domain/entities/Project";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectCardSkeleton } from "./ProjectCardSkeleton";
+import { useAuth } from "@/core/context/AuthContext";
+import { useUpdateProject } from "../hooks/useUpdateProject";
+import { useDeleteProject } from "../hooks/useDeleteProject";
+import { useGetMyProjects } from "../hooks/useGetMyProjects";
 
-interface ProjectListProps {
-  projects: Project[];
-  loading: boolean;
-}
+export const ProjectList = () => {
+  const { user } = useAuth();
 
-export const ProjectList = ({ projects, loading }: ProjectListProps) => {
+  const { projects = [], loading, refetch } = useGetMyProjects();
+
+  const { updateProject } = useUpdateProject();
+
+  const { deleteProject } = useDeleteProject();
+
+  const handleEdit = async (data: Project) => {
+    await updateProject(data);
+    refetch();
+  };
+
+  const handleDelete = async (id: string) => {
+    await deleteProject(id);
+  };
+
   if (loading) {
     return (
       <div className="grid gap-4 row-gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -29,7 +45,18 @@ export const ProjectList = ({ projects, loading }: ProjectListProps) => {
   return (
     <div className="grid gap-4 row-gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {projects.map((project) => (
-        <ProjectCard key={project.id} project={project} />
+        <ProjectCard
+          key={project.id}
+          project={project}
+          isOwner={project.authorId === user?.id}
+          onClick={() => {}}
+          onEdit={(data) => {
+            handleEdit(data);
+          }}
+          onDelete={(id) => {
+            handleDelete(id);
+          }}
+        />
       ))}
     </div>
   );
