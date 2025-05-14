@@ -90,7 +90,7 @@ Ve a [http://localhost:5173](http://localhost:5173) para ver el sitio en funcion
 
 ## 👨‍💻 Autores
 
-- Carlos Aveldaño
+- Carlos Avendaño
 - Cristian Cubillos
 - Nilson Diaz
 
