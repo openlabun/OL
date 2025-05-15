@@ -3,7 +3,6 @@ import {
   collection,
   doc,
   setDoc,
-  deleteDoc,
   updateDoc,
   getDocs,
   query,
@@ -21,14 +20,19 @@ export class FirebaseProjectDatasource {
   async getMyProjects(userId: string): Promise<ProjectDTO[]> {
     const q = query(
       collection(firestore, "projects"),
-      where("userId", "==", userId)
+      where("userId", "==", userId),
+      where("isDeleted", "==", false)
     );
     const snapshot = await getDocs(q);
     return snapshot.docs.map((doc) => doc.data() as ProjectDTO);
   }
 
   async getAllProjects(): Promise<ProjectDTO[]> {
-    const snapshot = await getDocs(collection(firestore, "projects"));
+    const q = query(
+      collection(firestore, "projects"),
+      where("isDeleted", "==", false)
+    );
+    const snapshot = await getDocs(q);
     return snapshot.docs.map((doc) => doc.data() as ProjectDTO);
   }
 
@@ -45,6 +49,10 @@ export class FirebaseProjectDatasource {
 
   async delete(projectId: string): Promise<void> {
     const docRef = doc(firestore, "projects", projectId);
-    await deleteDoc(docRef);
+
+    // Soft delete
+    await updateDoc(docRef, {
+      isDeleted: true,
+    });
   }
 }

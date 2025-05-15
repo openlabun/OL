@@ -8,29 +8,31 @@ import { MyProjectsPage } from "@/features/project/presentation/pages/MyProjects
 
 export const AppRouter = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Ruta principal con el layout para todas las páginas */}
-        <Route element={<MainLayout />}>
-          {/* Públicas */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/proyectos" element={<AllProjectsPage />} />
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+      <BrowserRouter>
+        <Routes>
+          {/* Ruta principal con el layout para todas las páginas */}
+          <Route element={<MainLayout />}>
+            {/* Públicas */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/proyectos" element={<AllProjectsPage />} />
 
-          {/* Privadas */}
-          <Route
-            path="/perfil"
-            element={
-              <PrivateRoute>
-                <MyProjectsPage />
-              </PrivateRoute>
-            }
-          />
+            {/* Privadas */}
+            <Route
+              path="/perfil"
+              element={
+                <PrivateRoute>
+                  <MyProjectsPage />
+                </PrivateRoute>
+              }
+            />
 
-          {/* Redirección por defecto */}
-          <Route path="*" element={<AllProjectsPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+            {/* Redirección por defecto */}
+            <Route path="*" element={<AllProjectsPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 };

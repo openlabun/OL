@@ -7,4 +7,5 @@ export interface ProjectDTO {
   url?: string;
   authorId?: string;
   authorName?: string;
+  isDeleted: boolean;
 }

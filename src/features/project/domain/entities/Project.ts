@@ -6,4 +6,5 @@ export interface Project {
   authorId: string;
   authorName: string;
   createdAt: Date;
+  isdeleted: boolean;
 }

@@ -21,6 +21,7 @@ export class ProjectRepositoryImpl implements ProjectRepository {
       ...project,
       id: crypto.randomUUID(),
       createdAt: new Date(Date.now()),
+      isdeleted: false,
     };
     const dto = ProjectMapper.toDTO(newProject);
     await this.datasource.create(dto);

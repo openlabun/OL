@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @theme {
   /* Red */
   --color-red-50: oklch(0.971 0.013 17.38);
