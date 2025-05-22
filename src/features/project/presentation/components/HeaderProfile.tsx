@@ -12,7 +12,7 @@ export const HeaderProfile = () => {
   const { createProject, loading: creating } = useCreateProject();
 
   const [showForm, setShowForm] = useState(false);
-  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [editingProject] = useState<Project | null>(null);
 
   const handleCreate = async (data: {
     title: string;
