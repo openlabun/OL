@@ -21,12 +21,10 @@ jobs:
     - name: install dependencies
       run: |
             npm install
-
-       
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST_PROD }}
+        host: ${{ secrets.HOST_TEST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
