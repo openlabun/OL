@@ -31,6 +31,7 @@ export const useCreateProject = () => {
         url,
         authorId: user.id,
         authorName: user.name,
+        isdeleted: false,
       };
 
       console.log("Este es el payload a crear: " + payload.authorName);
